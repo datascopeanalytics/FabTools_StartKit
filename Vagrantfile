@@ -4,10 +4,19 @@
 # if there are any problems with these required gems, vagrant
 # apparently has its own ruby environment (which makes sense). To
 # install these gems (iniparse, for example), you need to run
-# something like:
+# the following command:
 #
-# [unix]$ vagrant package install iniparse
-require 'iniparse'
+# [unix]$ vagrant plugin install iniparse
+begin
+  require 'iniparse'
+rescue LoadError
+  $stderr.print "\n\n----------------------------\n"
+  $stderr.print "You do not have the iniparse plugin.\n"
+  $stderr.print "Please install it by executing:\n\n"
+  $stderr.print "vagrant plugin install iniparse\n"
+  $stderr.print "----------------------------\n\n"
+  raise
+end
 
 Vagrant.configure("2") do |config|
   
